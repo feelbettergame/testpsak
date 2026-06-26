@@ -1,10 +1,12 @@
 <template>
   <div id="app" class="app-container">
     <Sidebar ref="sidebar" />
-    <main class="main-content">
+    <div class="main-wrapper">
       <Header />
-      <router-view />
-    </main>
+      <main class="main-content">
+        <router-view />
+      </main>
+    </div>
   </div>
 </template>
 
@@ -26,17 +28,30 @@ export default {
   overflow: hidden;
 }
 
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
 .main-content {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   background-color: #f5f7fa;
-  display: flex;
-  flex-direction: column;
 }
 
+/* Mobile Responsive */
 @media (max-width: 768px) {
   #app {
     flex-direction: column;
+  }
+
+  .main-wrapper {
+    flex: 1;
+    min-height: 0;
   }
 }
 </style>

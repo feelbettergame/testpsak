@@ -59,7 +59,7 @@ export default {
       this.isMobile = window.innerWidth < 768
     },
     toggleSidebar() {
-      this.$parent.$refs.sidebar?.toggleSidebar?.()
+      this.$root.$children[0].$refs.sidebar?.toggleSidebar?.()
     }
   }
 }
@@ -74,6 +74,7 @@ export default {
   top: 0;
   z-index: 50;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
 }
 
 .btn-menu {
@@ -194,6 +195,8 @@ export default {
 @media (max-width: 768px) {
   .header {
     padding: 12px 15px;
+    display: flex;
+    align-items: center;
   }
 
   .btn-menu {
@@ -204,6 +207,7 @@ export default {
 
   .header-content {
     gap: 10px;
+    flex: 1;
   }
 
   .greeting h1 {
@@ -232,6 +236,7 @@ export default {
   .header-content {
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
   }
 
   .greeting h1 {

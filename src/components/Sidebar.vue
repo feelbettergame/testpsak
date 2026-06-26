@@ -13,12 +13,12 @@
     </div>
 
     <nav class="nav-menu">
-      <router-link to="/" class="nav-item" :class="{ active: $route.path === '/' }">
+      <router-link to="/" class="nav-item" :class="{ active: $route.path === '/' }" @click="closeSidebarMobile">
         <span class="icon">🏠</span>
         <span class="label">Beranda</span>
       </router-link>
 
-      <router-link to="/standards" class="nav-item" :class="{ active: $route.path === '/standards' }">
+      <router-link to="/standards" class="nav-item" :class="{ active: $route.path === '/standards' }" @click="closeSidebarMobile">
         <span class="icon">📋</span>
         <span class="label">Standar</span>
       </router-link>
@@ -31,29 +31,29 @@
           <span class="arrow" :class="{ open: submenuOpen }">›</span>
         </button>
         <div class="submenu" v-show="submenuOpen">
-          <router-link to="/interpretations" class="submenu-item">🔍 Interpretasi IFRIC</router-link>
-          <router-link to="/implementation" class="submenu-item">✓ Panduan Implementasi</router-link>
+          <router-link to="/interpretations" class="submenu-item" @click="closeSidebarMobile">🔍 Interpretasi IFRIC</router-link>
+          <router-link to="/implementation" class="submenu-item" @click="closeSidebarMobile">✓ Panduan Implementasi</router-link>
           <a href="#" class="submenu-item">📖 Contoh Praktis</a>
           <a href="#" class="submenu-item">💡 Tips & Trik</a>
         </div>
       </div>
 
-      <router-link to="/guidance" class="nav-item" :class="{ active: $route.path === '/guidance' }">
+      <router-link to="/guidance" class="nav-item" :class="{ active: $route.path === '/guidance' }" @click="closeSidebarMobile">
         <span class="icon">🎓</span>
         <span class="label">Panduan</span>
       </router-link>
 
-      <a href="#" class="nav-item">
+      <a href="#" class="nav-item" @click="closeSidebarMobile">
         <span class="icon">🔔</span>
         <span class="label">Update</span>
       </a>
 
-      <a href="#" class="nav-item">
+      <a href="#" class="nav-item" @click="closeSidebarMobile">
         <span class="icon">⭐</span>
         <span class="label">Favorit</span>
       </a>
 
-      <a href="#" class="nav-item">
+      <a href="#" class="nav-item" @click="closeSidebarMobile">
         <span class="icon">⏱️</span>
         <span class="label">Riwayat</span>
       </a>
@@ -66,10 +66,10 @@
           <span class="arrow" :class="{ open: settingsOpen }">›</span>
         </button>
         <div class="submenu" v-show="settingsOpen">
-          <a href="#" class="submenu-item">👤 Profil Saya</a>
-          <a href="#" class="submenu-item">🔐 Keamanan</a>
-          <a href="#" class="submenu-item">🌙 Tema</a>
-          <a href="#" class="submenu-item">🌐 Bahasa</a>
+          <a href="#" class="submenu-item" @click="closeSidebarMobile">👤 Profil Saya</a>
+          <a href="#" class="submenu-item" @click="closeSidebarMobile">🔐 Keamanan</a>
+          <a href="#" class="submenu-item" @click="closeSidebarMobile">🌙 Tema</a>
+          <a href="#" class="submenu-item" @click="closeSidebarMobile">🌐 Bahasa</a>
         </div>
       </div>
     </nav>
@@ -125,6 +125,11 @@ export default {
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen
     },
+    closeSidebarMobile() {
+      if (this.isMobile) {
+        this.sidebarOpen = false
+      }
+    },
     checkMobile() {
       this.isMobile = window.innerWidth < 768
       if (!this.isMobile) {
@@ -161,6 +166,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .logo {
@@ -316,6 +322,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 .version-info {
@@ -414,6 +421,7 @@ export default {
     top: 0;
     bottom: 0;
     transform: translateX(-100%);
+    width: 250px;
   }
 
   .sidebar.sidebar-open {
@@ -425,60 +433,62 @@ export default {
   }
 
   .logo-text span {
-    display: none;
+    display: block;
   }
 
   .label {
-    display: none;
+    display: block;
   }
 
   .nav-item,
   .nav-toggle {
-    justify-content: center;
-    padding: 12px;
+    justify-content: flex-start;
+    padding: 12px 16px;
   }
 
   .nav-item.active {
     border-left: 3px solid #4a9eff;
-    padding-left: 9px;
+    padding-left: 13px;
   }
 
   .submenu {
-    display: none !important;
+    display: flex !important;
+  }
+
+  .submenu-item {
+    padding: 10px 16px;
   }
 
   .sidebar-footer {
-    padding: 10px 8px;
+    padding: 12px;
   }
 
   .user-profile {
-    flex-direction: column;
-    padding: 8px;
+    flex-direction: row;
+    padding: 10px;
   }
 
   .user-info {
-    display: none;
+    display: block;
   }
 
   .avatar {
-    width: 35px;
-    height: 35px;
-    font-size: 14px;
+    width: 40px;
+    height: 40px;
   }
 
   .btn-logout {
-    padding: 8px;
-    justify-content: center;
+    padding: 10px 12px;
   }
 
   .btn-logout .label {
-    display: none;
+    display: inline;
   }
 }
 
 @media (max-width: 480px) {
   .sidebar {
-    width: 200px;
+    width: 220px;
   }
 
   .logo-icon {
@@ -492,6 +502,18 @@ export default {
   }
 
   .logo-text p {
+    font-size: 12px;
+  }
+
+  .nav-item,
+  .nav-toggle {
+    padding: 10px 14px;
+    font-size: 13px;
+    gap: 10px;
+  }
+
+  .submenu-item {
+    padding: 8px 14px;
     font-size: 12px;
   }
 }
